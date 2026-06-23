@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ConnectHub | Post Thread</title>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Premium Style -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Mobile Responsive Top Header -->
+  <header class="mobile-header">
+    <div class="logo-container" style="margin-bottom: 0;">
+      <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-primary);">
+        <div class="logo-icon" style="width:30px; height:30px; font-size:1rem; border-radius:8px;">C</div>
+        <span class="logo-text" style="font-size:1.25rem;">ConnectHub</span>
+      </a>
+    </div>
+    <div style="display: flex; gap: 0.75rem; align-items: center;">
+      <button class="theme-toggle-btn" style="border: none; padding: 0.4rem;"><i class="fas fa-moon"></i></button>
+      <a href="#" class="logout-btn" style="color: var(--danger-color); font-size: 1.15rem;"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </header>
+
+  <div class="app-container">
+    
+    <!-- Desktop Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <div class="logo-icon">C</div>
+        <span class="logo-text">ConnectHub</span>
+      </div>
+
+      <nav class="nav-menu">
+        <li class="nav-item">
+          <a href="index.html">
+            <i class="fas fa-home"></i>
+            <span>Home Feed</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" id="sidebar-profile-link">
+            <i class="fas fa-user"></i>
+            <span>My Profile</span>
+          </a>
+        </li>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="theme-toggle-btn">
+          <i class="fas fa-moon"></i>
+          <span class="theme-text">Dark Mode</span>
+        </button>
+        
+        <!-- User snippet at bottom of sidebar -->
+        <div class="user-snippet">
+          <img class="user-avatar-sm" src="" alt="Avatar">
+          <div class="user-snippet-info">
+            <span class="user-snippet-name">Loading...</span>
+            <span class="user-snippet-username">@username</span>
+          </div>
+          <i class="fas fa-ellipsis-h" style="margin-left: auto; color: var(--text-muted); font-size: 0.85rem;"></i>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Thread Column (Left / Middle) -->
+      <section class="feed-column">
+        
+        <!-- Back Link Navigation -->
+        <div style="margin-bottom: 0.5rem;">
+          <a href="index.html" style="display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 600; font-size: 0.9rem; color: var(--text-secondary);">
+            <i class="fas fa-arrow-left"></i> Back to Feed
+          </a>
+        </div>
+
+        <!-- Post Detail Container -->
+        <div id="post-detail-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div class="card" style="text-align: center; padding: 3rem;">
+            <i class="fas fa-spinner fa-spin fa-2x" style="color: var(--accent-primary); margin-bottom: 1rem;"></i>
+            <p style="color: var(--text-secondary);">Retrieving thread details...</p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Widgets Column (Right - Sticky) -->
+      <section class="widgets-column">
+        <!-- Suggested Users Box -->
+        <div class="card">
+          <h3 style="font-size: 1rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">Suggested Users</h3>
+          <div class="suggested-list" id="suggested-users-list">
+            <p class="trending-count" style="text-align: center; padding: 1rem 0;">Loading suggestions...</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Mobile Navigation Bar -->
+    <nav class="mobile-nav">
+      <a href="index.html">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </a>
+      <a href="#" id="mobile-profile-link">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <!-- Javascript Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/post.js"></script>
+</body>
+</html>

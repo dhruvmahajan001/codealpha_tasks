@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | ConnectHub</title>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Premium Style -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="auth-wrapper">
+    <div class="card auth-card">
+      <div class="auth-logo">
+        <div class="logo-icon">C</div>
+        <h2 class="gradient-text">Welcome Back</h2>
+        <p class="trending-count">Log in to check your personalized feed</p>
+      </div>
+
+      <!-- Alert Message Box -->
+      <div id="alert-box" style="display: none; padding: 0.75rem; border-radius: var(--border-radius-sm); margin-bottom: 1rem; text-align: center; font-size: 0.875rem; font-weight: 600;"></div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="email-username">Email Address / Username</label>
+          <input type="text" id="email-username" class="form-control" placeholder="Enter your email or username" required autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <label for="password">Password</label>
+          </div>
+          <input type="password" id="password" class="form-control" placeholder="Enter your password" required autocomplete="current-password">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" id="submit-btn">
+          <span>Log In</span>
+          <i class="fas fa-sign-in-alt"></i>
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <p>Don't have an account? <a href="register.html">Sign up for free</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Javascript Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  
+  <!-- Page Specific Logic -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginForm = document.getElementById('login-form');
+      const alertBox = document.getElementById('alert-box');
+      const submitBtn = document.getElementById('submit-btn');
+
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const email = document.getElementById('email-username').value.trim();
+        const password = document.getElementById('password').value;
+
+        // Reset Alert state
+        showAlert('', false);
+        setLoading(true);
+
+        try {
+          const api = window.ConnectHubAPI;
+          const result = await api.request('/auth/login', 'POST', { email, password }, false);
+          
+          if (result.success) {
+            // Save token and user details to localStorage
+            api.setSession(result.token, {
+              _id: result._id,
+              name: result.name,
+              username: result.username,
+              email: result.email,
+              profilePicture: result.profilePicture,
+              bio: result.bio
+            });
+
+            showAlert('Success! Redirecting...', true);
+            setTimeout(() => {
+              window.location.href = 'index.html';
+            }, 1000);
+          }
+        } catch (error) {
+          showAlert(error.message || 'Login failed. Please try again.', false);
+          setLoading(false);
+        }
+      });
+
+      function showAlert(msg, isSuccess) {
+        if (!msg) {
+          alertBox.style.display = 'none';
+          return;
+        }
+
+        alertBox.textContent = msg;
+        alertBox.style.display = 'block';
+
+        if (isSuccess) {
+          alertBox.style.backgroundColor = 'rgba(16, 185, 129, 0.15)';
+          alertBox.style.color = 'var(--success-color)';
+          alertBox.style.border = '1px solid var(--success-color)';
+        } else {
+          alertBox.style.backgroundColor = 'rgba(239, 68, 68, 0.15)';
+          alertBox.style.color = 'var(--danger-color)';
+          alertBox.style.border = '1px solid var(--danger-color)';
+        }
+      }
+
+      function setLoading(isLoading) {
+        if (isLoading) {
+          submitBtn.disabled = true;
+          submitBtn.querySelector('span').textContent = 'Authenticating...';
+          submitBtn.querySelector('i').className = 'fas fa-spinner fa-spin';
+        } else {
+          submitBtn.disabled = false;
+          submitBtn.querySelector('span').textContent = 'Log In';
+          submitBtn.querySelector('i').className = 'fas fa-sign-in-alt';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

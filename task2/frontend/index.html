@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ConnectHub | Feed</title>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Premium Style -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Mobile Responsive Top Header -->
+  <header class="mobile-header">
+    <div class="logo-container" style="margin-bottom: 0;">
+      <div class="logo-icon" style="width:30px; height:30px; font-size:1rem; border-radius:8px;">C</div>
+      <span class="logo-text" style="font-size:1.25rem;">ConnectHub</span>
+    </div>
+    <div style="display: flex; gap: 0.75rem; align-items: center;">
+      <button class="theme-toggle-btn" style="border: none; padding: 0.4rem;"><i class="fas fa-moon"></i></button>
+      <a href="#" class="logout-btn" style="color: var(--danger-color); font-size: 1.15rem;"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </header>
+
+  <div class="app-container">
+    
+    <!-- Desktop Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <div class="logo-icon">C</div>
+        <span class="logo-text">ConnectHub</span>
+      </div>
+
+      <nav class="nav-menu">
+        <li class="nav-item active">
+          <a href="index.html">
+            <i class="fas fa-home"></i>
+            <span>Home Feed</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" id="sidebar-profile-link">
+            <i class="fas fa-user"></i>
+            <span>My Profile</span>
+          </a>
+        </li>
+        <li class="nav-item" style="display: none;" id="nav-notifications">
+          <a href="#">
+            <i class="fas fa-bell"></i>
+            <span>Notifications</span>
+            <span class="nav-badge" id="notifications-badge">1</span>
+          </a>
+        </li>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="theme-toggle-btn">
+          <i class="fas fa-moon"></i>
+          <span class="theme-text">Dark Mode</span>
+        </button>
+        
+        <!-- User snippet at bottom of sidebar -->
+        <div class="user-snippet">
+          <img class="user-avatar-sm" src="" alt="Avatar">
+          <div class="user-snippet-info">
+            <span class="user-snippet-name">Loading...</span>
+            <span class="user-snippet-username">@username</span>
+          </div>
+          <i class="fas fa-ellipsis-h" style="margin-left: auto; color: var(--text-muted); font-size: 0.85rem;"></i>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Feed Column (Left / Middle) -->
+      <section class="feed-column">
+        
+        <!-- Create Post Card -->
+        <div class="card create-post-card">
+          <div class="create-post-avatar-row">
+            <img class="user-avatar-sm create-post-avatar" src="" alt="Profile Picture">
+            <div class="create-post-input-container">
+              <textarea id="post-content" class="create-post-textarea" placeholder="What's on your mind? Share your thoughts... (Hashtags are auto-detected!)" maxlength="500"></textarea>
+              
+              <!-- Post Local Image Preview container -->
+              <div class="create-post-image-preview-container" id="image-preview-container">
+                <img id="image-preview" src="" alt="Preview">
+                <button type="button" class="remove-preview-btn" id="remove-preview-btn">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+
+              <!-- Input for Image URL (Toggled via button) -->
+              <div id="image-url-container" style="display: none; margin-top: 0.5rem;">
+                <input type="text" id="post-image-url" class="form-control" placeholder="Or paste web image URL here..." style="font-size: 0.85rem; padding: 0.5rem;">
+              </div>
+
+              <!-- Create Post footer buttons -->
+              <div class="create-post-actions">
+                <div class="create-post-tools">
+                  <!-- File upload input for base64 -->
+                  <label for="post-file-input" class="file-upload-label" title="Attach local file">
+                    <i class="fas fa-image"></i>
+                  </label>
+                  <input type="file" id="post-file-input" accept="image/*" style="display: none;">
+                  
+                  <!-- URL input toggle button -->
+                  <button type="button" id="toggle-url-btn" class="file-upload-label" style="background: none; border: none; font-size: 1rem;" title="Attach web image URL">
+                    <i class="fas fa-link"></i>
+                  </button>
+                </div>
+                
+                <button id="submit-post-btn" class="btn btn-primary btn-sm">
+                  <span>Post</span>
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Query Filter Bar (Visible when searching or filtering by tag) -->
+        <div id="filter-bar" class="card" style="display: none; padding: 0.75rem 1rem; align-items: center; justify-content: space-between; font-size: 0.9rem; border-color: var(--accent-primary); background-color: var(--accent-light);">
+          <div>
+            <span style="color: var(--text-secondary);">Showing results for: </span>
+            <strong id="filter-query-text" style="color: var(--accent-primary);">#hashtag</strong>
+          </div>
+          <button id="clear-filter-btn" class="btn btn-secondary btn-sm" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">Clear</button>
+        </div>
+
+        <!-- Feed List Container -->
+        <div id="posts-container" style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <!-- Posts will be injected here dynamically -->
+          <div class="card" style="text-align: center; padding: 3rem;">
+            <i class="fas fa-spinner fa-spin fa-2x" style="color: var(--accent-primary); margin-bottom: 1rem;"></i>
+            <p style="color: var(--text-secondary);">Gathering latest updates...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Widgets Column (Right - Sticky) -->
+      <section class="widgets-column">
+        
+        <!-- Search User Box -->
+        <div class="search-widget">
+          <input type="text" id="search-input" class="search-input" placeholder="Search posts or users...">
+          <button id="search-btn" class="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+
+        <!-- Suggested Users Box -->
+        <div class="card">
+          <h3 style="font-size: 1rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">Suggested Users</h3>
+          <div class="suggested-list" id="suggested-users-list">
+            <!-- Injected dynamically -->
+            <p class="trending-count" style="text-align: center; padding: 1rem 0;">Loading suggestions...</p>
+          </div>
+        </div>
+
+        <!-- Trending hashtags -->
+        <div class="card">
+          <h3 style="font-size: 1rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">Trending Topics</h3>
+          <div class="trending-list" id="trending-hashtags-list">
+            <!-- Injected dynamically -->
+            <p class="trending-count" style="text-align: center; padding: 1rem 0;">Calculating trends...</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Mobile Navigation Bar -->
+    <nav class="mobile-nav">
+      <a href="index.html" class="active">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </a>
+      <a href="#" id="mobile-profile-link">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <!-- Javascript Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/feed.js"></script>
+</body>
+</html>

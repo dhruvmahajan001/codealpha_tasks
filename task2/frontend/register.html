@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | ConnectHub</title>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Premium Style -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="auth-wrapper">
+    <div class="card auth-card">
+      <div class="auth-logo">
+        <div class="logo-icon">C</div>
+        <h2 class="gradient-text">Create Account</h2>
+        <p class="trending-count">Join ConnectHub to share posts and comments</p>
+      </div>
+
+      <!-- Alert Message Box -->
+      <div id="alert-box" style="display: none; padding: 0.75rem; border-radius: var(--border-radius-sm); margin-bottom: 1rem; text-align: center; font-size: 0.875rem; font-weight: 600;"></div>
+
+      <form id="register-form">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" class="form-control" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" class="form-control" placeholder="e.g. johndoe" required autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" class="form-control" placeholder="Enter your email" required autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" class="form-control" placeholder="Minimum 6 characters" required autocomplete="new-password">
+        </div>
+
+        <div class="form-group">
+          <label for="confirm-password">Confirm Password</label>
+          <input type="password" id="confirm-password" class="form-control" placeholder="Repeat your password" required autocomplete="new-password">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" id="submit-btn">
+          <span>Create Account</span>
+          <i class="fas fa-user-plus"></i>
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <p>Already have an account? <a href="login.html">Log in here</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Javascript Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  
+  <!-- Page Specific Logic -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const registerForm = document.getElementById('register-form');
+      const alertBox = document.getElementById('alert-box');
+      const submitBtn = document.getElementById('submit-btn');
+
+      registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value.trim();
+        const username = document.getElementById('username').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+
+        // Validation
+        if (password !== confirmPassword) {
+          showAlert('Passwords do not match', false);
+          return;
+        }
+
+        if (password.length < 6) {
+          showAlert('Password must be at least 6 characters long', false);
+          return;
+        }
+
+        // Reset Alert state
+        showAlert('', false);
+        setLoading(true);
+
+        try {
+          const api = window.ConnectHubAPI;
+          const result = await api.request('/auth/register', 'POST', {
+            name,
+            username,
+            email,
+            password,
+            confirmPassword
+          }, false);
+          
+          if (result.success) {
+            // Save token and user details to localStorage
+            api.setSession(result.token, {
+              _id: result._id,
+              name: result.name,
+              username: result.username,
+              email: result.email,
+              profilePicture: result.profilePicture,
+              bio: result.bio
+            });
+
+            showAlert('Account created successfully! Redirecting...', true);
+            setTimeout(() => {
+              window.location.href = 'index.html';
+            }, 1000);
+          }
+        } catch (error) {
+          showAlert(error.message || 'Registration failed. Username or Email may be taken.', false);
+          setLoading(false);
+        }
+      });
+
+      function showAlert(msg, isSuccess) {
+        if (!msg) {
+          alertBox.style.display = 'none';
+          return;
+        }
+
+        alertBox.textContent = msg;
+        alertBox.style.display = 'block';
+
+        if (isSuccess) {
+          alertBox.style.backgroundColor = 'rgba(16, 185, 129, 0.15)';
+          alertBox.style.color = 'var(--success-color)';
+          alertBox.style.border = '1px solid var(--success-color)';
+        } else {
+          alertBox.style.backgroundColor = 'rgba(239, 68, 68, 0.15)';
+          alertBox.style.color = 'var(--danger-color)';
+          alertBox.style.border = '1px solid var(--danger-color)';
+        }
+      }
+
+      function setLoading(isLoading) {
+        if (isLoading) {
+          submitBtn.disabled = true;
+          submitBtn.querySelector('span').textContent = 'Creating Account...';
+          submitBtn.querySelector('i').className = 'fas fa-spinner fa-spin';
+        } else {
+          submitBtn.disabled = false;
+          submitBtn.querySelector('span').textContent = 'Create Account';
+          submitBtn.querySelector('i').className = 'fas fa-user-plus';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
