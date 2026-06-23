@@ -1,6 +1,6 @@
 # CodeAlpha Web Development Internship
 
-This repository contains the projects completed by **Dhruv Mahajan** during the **CodeAlpha Web Development Internship**.
+This repository contains the projects during the **CodeAlpha Web Development Internship**.
 
 ## 🚀 Projects
 
