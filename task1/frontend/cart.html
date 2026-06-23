@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart - ShopNest</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="logo-icon"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        Shop<span class="logo-accent">Nest</span>
+      </a>
+
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" class="menu-toggle-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="cart.html" class="cart-icon-wrapper">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cart-icon">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span id="cart-badge" class="cart-badge hidden">0</span>
+        </a>
+        <div id="nav-auth-container" class="user-menu-wrapper">
+          <span class="loading-spinner-btn"></span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- CART SECTION -->
+  <section class="py-16">
+    <div class="container">
+      <h2 class="section-title">Your Cart</h2>
+
+      <!-- Main Cart Layout Grid (Visible when items are in cart) -->
+      <div class="cart-layout" id="cart-layout">
+        
+        <!-- Cart Items List Column -->
+        <div class="cart-items-container" id="cart-items-list">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <!-- Order Summary Card Column -->
+        <div class="cart-summary-card">
+          <h3 class="cart-summary-title">Order Summary</h3>
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="cart-subtotal">$0.00</span>
+          </div>
+          <div class="summary-row">
+            <span>Shipping</span>
+            <span class="text-success" style="color: var(--success); font-weight: 600;">FREE</span>
+          </div>
+          <div class="summary-row total-row">
+            <span>Total</span>
+            <span id="cart-total">$0.00</span>
+          </div>
+          <button id="checkout-btn" class="btn btn-primary btn-full-width mt-4 btn-lg">
+            Proceed to Checkout
+          </button>
+        </div>
+      </div>
+
+      <!-- Empty Cart State Container -->
+      <div class="empty-cart-state hidden" id="empty-cart-state">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="empty-cart-icon">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+        </svg>
+        <h3>Your Shopping Cart is Empty</h3>
+        <p class="mb-8" style="color: var(--text-muted); margin-bottom: 2rem;">Looks like you haven't added any products to your cart yet.</p>
+        <a href="index.html" class="btn btn-primary">Start Shopping</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <h3>ShopNest</h3>
+        <p>A complete modern e-commerce web platform built for high-performance and visual excellence.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Categories</h3>
+        <ul class="footer-links">
+          <li><a href="index.html#shop-section">Electronics</a></li>
+          <li><a href="index.html#shop-section">Clothing</a></li>
+          <li><a href="index.html#shop-section">Shoes</a></li>
+          <li><a href="index.html#shop-section">Accessories</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="cart.html">View Shopping Cart</a></li>
+          <li><a href="login.html">Sign In</a></li>
+          <li><a href="register.html">Create Account</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; 2026 ShopNest E-Commerce. All rights reserved.</p>
+      <p>CodeAlpha Internship Task 1</p>
+    </div>
+  </footer>
+
+  <!-- DEPENDENCIES & APPLICATION LOGIC SCRIPTS -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCart();
+
+      // Mobile Nav Toggle
+      const menuToggle = document.getElementById('menu-toggle');
+      const navLinks = document.getElementById('nav-links');
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', () => {
+          navLinks.classList.toggle('active');
+        });
+      }
+
+      // Proceed to Checkout
+      const checkoutBtn = document.getElementById('checkout-btn');
+      if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', () => {
+          if (Auth.isAuthenticated()) {
+            window.location.href = 'checkout.html';
+          } else {
+            showToast('Please log in to checkout', 'warning');
+            setTimeout(() => {
+              window.location.href = 'login.html?redirect=checkout.html';
+            }, 1000);
+          }
+        });
+      }
+    });
+
+    async function renderCart() {
+      const itemsList = document.getElementById('cart-items-list');
+      const cartLayout = document.getElementById('cart-layout');
+      const emptyState = document.getElementById('empty-cart-state');
+      const subtotalLbl = document.getElementById('cart-subtotal');
+      const totalLbl = document.getElementById('cart-total');
+
+      if (!itemsList || !cartLayout || !emptyState) return;
+
+      try {
+        itemsList.innerHTML = `
+          <div class="text-center py-8">
+            <span class="loading-spinner"></span>
+            <p>Loading your cart items...</p>
+          </div>
+        `;
+
+        const items = await Cart.getItems();
+
+        if (items.length === 0) {
+          cartLayout.classList.add('hidden');
+          emptyState.classList.remove('hidden');
+          return;
+        }
+
+        cartLayout.classList.remove('hidden');
+        emptyState.classList.add('hidden');
+
+        let totalAmount = 0;
+        itemsList.innerHTML = items.map(item => {
+          const product = item.product;
+          if (!product) return '';
+
+          const subtotal = product.price * item.quantity;
+          totalAmount += subtotal;
+
+          return `
+            <div class="cart-item-card" data-id="${product._id}">
+              <img src="${product.image}" alt="${product.name}" class="cart-item-img">
+              <div class="cart-item-info">
+                <h3 class="cart-item-name">${product.name}</h3>
+                <p class="cart-item-category">${product.category}</p>
+                <span class="cart-item-price">$${product.price.toFixed(2)}</span>
+              </div>
+              <div class="cart-item-actions">
+                <div class="qty-controls-row" style="background-color: var(--background);">
+                  <button class="btn-qty-change minus-btn">-</button>
+                  <input type="number" class="qty-input item-qty-val" value="${item.quantity}" min="1" max="${product.stock}" readonly>
+                  <button class="btn-qty-change plus-btn">+</button>
+                </div>
+                <button class="btn-remove-item remove-btn" aria-label="Remove item">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="remove-icon-svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        subtotalLbl.textContent = `$${totalAmount.toFixed(2)}`;
+        totalLbl.textContent = `$${totalAmount.toFixed(2)}`;
+
+        // Wire event listeners for each card item
+        document.querySelectorAll('.cart-item-card').forEach(card => {
+          const productId = card.getAttribute('data-id');
+          const minusBtn = card.querySelector('.minus-btn');
+          const plusBtn = card.querySelector('.plus-btn');
+          const removeBtn = card.querySelector('.remove-btn');
+          const qtyInput = card.querySelector('.item-qty-val');
+
+          const activeItem = items.find(it => it.product && it.product._id === productId);
+          if (!activeItem) return;
+
+          minusBtn.addEventListener('click', async () => {
+            let val = Number(qtyInput.value);
+            if (val > 1) {
+              qtyInput.value = val - 1;
+              await Cart.updateQuantity(productId, val - 1);
+              renderCart();
+            }
+          });
+
+          plusBtn.addEventListener('click', async () => {
+            let val = Number(qtyInput.value);
+            if (val < activeItem.product.stock) {
+              qtyInput.value = val + 1;
+              await Cart.updateQuantity(productId, val + 1);
+              renderCart();
+            } else {
+              showToast(`Only ${activeItem.product.stock} units available in stock`, 'warning');
+            }
+          });
+
+          removeBtn.addEventListener('click', async () => {
+            await Cart.removeItem(productId);
+            renderCart();
+          });
+        });
+
+      } catch (err) {
+        itemsList.innerHTML = `
+          <div class="error-state">
+            <h3>Unable to load cart</h3>
+            <p>${err.message}</p>
+            <button onclick="window.location.reload()" class="btn btn-primary mt-2">Try Again</button>
+          </div>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>

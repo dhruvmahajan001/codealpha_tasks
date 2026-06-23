@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - ShopNest</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="logo-icon"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        Shop<span class="logo-accent">Nest</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="cart.html" class="nav-link">Back to Cart</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- CHECKOUT SECTION -->
+  <section class="py-16">
+    <div class="container">
+      <h2 class="section-title">Shipping & Checkout</h2>
+
+      <div class="checkout-layout">
+        
+        <!-- Shipping Address Form Column -->
+        <div class="checkout-card">
+          <h3 class="mb-4" style="font-weight: 700; font-size: 1.25rem;">Shipping Address</h3>
+          <form id="checkout-form">
+            <div class="form-group">
+              <label for="fullName">Receiver Full Name</label>
+              <input type="text" id="fullName" class="form-control" placeholder="John Doe" required>
+            </div>
+            <div class="form-group">
+              <label for="phoneNumber">Phone Number</label>
+              <input type="tel" id="phoneNumber" class="form-control" placeholder="9876543210" required>
+            </div>
+            <div class="form-group">
+              <label for="address">Street Address</label>
+              <input type="text" id="address" class="form-control" placeholder="Flat No, Street, Landmark" required>
+            </div>
+            <div class="checkout-grid-2">
+              <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" class="form-control" placeholder="New York" required>
+              </div>
+              <div class="form-group">
+                <label for="state">State / Province</label>
+                <input type="text" id="state" class="form-control" placeholder="NY" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="pincode">Pincode / ZIP Code</label>
+              <input type="text" id="pincode" class="form-control" placeholder="10001" required>
+            </div>
+            
+            <button type="submit" id="place-order-btn" class="btn btn-primary btn-full-width btn-lg mt-4">
+              Place Order
+            </button>
+          </form>
+        </div>
+
+        <!-- Order Summary Column -->
+        <div class="cart-summary-card">
+          <h3 class="cart-summary-title">Order Summary</h3>
+          
+          <div id="checkout-items-list" class="checkout-items-list mb-4">
+            <!-- Items rendered dynamically -->
+          </div>
+
+          <div class="summary-row">
+            <span>Shipping Cost</span>
+            <span class="text-success" style="color: var(--success); font-weight: 600;">FREE</span>
+          </div>
+          <div class="summary-row total-row">
+            <span>Amount Due</span>
+            <span id="checkout-grand-total">$0.00</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-bottom" style="border-top: none; padding-top: 0;">
+      <p>&copy; 2026 ShopNest E-Commerce. All rights reserved.</p>
+      <p>CodeAlpha Internship Task 1</p>
+    </div>
+  </footer>
+
+  <!-- DEPENDENCIES & APPLICATION LOGIC SCRIPTS -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/checkout.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Checkout.init();
+    });
+  </script>
+</body>
+</html>

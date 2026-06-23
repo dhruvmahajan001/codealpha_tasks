@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopNest - Modern Online Shopping Platform</title>
+  <meta name="description" content="Browse high-quality electronics, apparel, shoes, and accessories at ShopNest. Enjoy quick secure checkouts and premium deals.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="logo-icon"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        Shop<span class="logo-accent">Nest</span>
+      </a>
+
+      <!-- Mobile Navigation Hamburger -->
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" class="menu-toggle-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="cart.html" class="cart-icon-wrapper">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cart-icon">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span id="cart-badge" class="cart-badge hidden">0</span>
+        </a>
+        <!-- Auth Container: Render user greeting or Login/Register buttons dynamically -->
+        <div id="nav-auth-container" class="user-menu-wrapper">
+          <span class="loading-spinner-btn"></span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="container hero-layout">
+      <div class="hero-info-section">
+        <h1 class="hero-title">Elevate Your <br>Shopping Experience</h1>
+        <p class="hero-subtitle">Discover curated premium collections of electronics, trendy apparel, shoes, and everyday accessories at unbeatable prices.</p>
+        <div class="hero-cta-row">
+          <a href="#shop-section" class="btn btn-primary btn-lg">Shop Catalog Now</a>
+        </div>
+      </div>
+      <div class="hero-img-section">
+        <div class="hero-img-backdrop"></div>
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop&q=60" alt="Featured sneakers promotion" class="hero-img">
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS CATALOGUE SECTION -->
+  <section class="py-16" id="shop-section">
+    <div class="container">
+      <h2 class="section-title">Explore Catalog</h2>
+      
+      <!-- Controls (Search, Categories, Sort) -->
+      <div class="catalog-controls">
+        <div class="search-bar-row">
+          <div class="search-input-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="search-icon-svg">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input type="text" id="search-input" class="search-input" placeholder="Search products, brands...">
+          </div>
+          <button id="search-btn" class="btn btn-primary">Search</button>
+        </div>
+
+        <div class="filter-sort-row">
+          <div class="category-filters">
+            <button class="category-btn active" data-category="All">All Items</button>
+            <button class="category-btn" data-category="Electronics">Electronics</button>
+            <button class="category-btn" data-category="Clothing">Clothing</button>
+            <button class="category-btn" data-category="Shoes">Shoes</button>
+            <button class="category-btn" data-category="Accessories">Accessories</button>
+          </div>
+          <div class="sort-wrapper">
+            <label for="sort-select">Sort By:</label>
+            <select id="sort-select" class="sort-select">
+              <option value="newest">Newest Arrivals</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Products Grid -->
+      <div id="products-grid" class="products-grid">
+        <!-- Render Skeletons initially, replaced by API content -->
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <h3>ShopNest</h3>
+        <p>A complete modern e-commerce web platform built for high-performance and visual excellence. p>
+      </div>
+      <div class="footer-col">
+        <h3>Categories</h3>
+        <ul class="footer-links">
+          <li><a href="#shop-section">Electronics</a></li>
+          <li><a href="#shop-section">Clothing</a></li>
+          <li><a href="#shop-section">Shoes</a></li>
+          <li><a href="#shop-section">Accessories</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="cart.html">View Shopping Cart</a></li>
+          <li><a href="login.html">Sign In</a></li>
+          <li><a href="register.html">Create Account</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; 2026 ShopNest E-Commerce. All rights reserved.</p>
+      <p>CodeAlpha Internship Task 1</p>
+    </div>
+  </footer>
+
+  <!-- DEPENDENCIES & APPLICATION LOGIC SCRIPTS -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/products.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Homepage products listing
+      Products.initCatalogPage();
+
+      // Setup Mobile Navigation toggle
+      const menuToggle = document.getElementById('menu-toggle');
+      const navLinks = document.getElementById('nav-links');
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', () => {
+          navLinks.classList.toggle('active');
+        });
+      }
+    });
+  </script>
+</body>
+</html>

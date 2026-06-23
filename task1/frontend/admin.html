@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - ShopNest</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="logo-icon"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        Shop<span class="logo-accent">Nest</span> <span class="admin-badge" style="font-size: 0.75rem; margin-left: 0.5rem; vertical-align: middle;">Admin</span>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">View Shop</a>
+        <div id="nav-auth-container" class="user-menu-wrapper">
+          <span class="loading-spinner-btn"></span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ADMIN MANAGEMENT CONTAINER -->
+  <main class="py-16 flex-grow-1">
+    <div class="container">
+      
+      <div class="admin-header-row">
+        <h2 class="section-title" style="margin-bottom: 0;">Product Catalog Management</h2>
+        <button id="admin-add-product-btn" class="btn btn-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          Add Product
+        </button>
+      </div>
+
+      <!-- Products Management Table -->
+      <div class="admin-card mt-4">
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Thumbnail</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock Level</th>
+                <th>Date Added</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-products-table-body">
+              <!-- Rendered dynamically via admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- MODAL POPUP FOR ADD / EDIT -->
+  <div class="modal" id="product-modal">
+    <div class="modal-content">
+      <button class="close-modal" id="close-modal-btn">&times;</button>
+      <h3 id="modal-title" style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem;">Add New Product</h3>
+      
+      <form id="admin-product-form">
+        <!-- Hidden ID for Editing -->
+        <input type="hidden" id="edit-product-id">
+
+        <div class="form-group">
+          <label for="product-name">Product Name</label>
+          <input type="text" id="product-name" class="form-control" placeholder="e.g. Aura Sound Headphones" required>
+        </div>
+
+        <div class="form-group">
+          <label for="product-desc">Description</label>
+          <textarea id="product-desc" class="form-control" rows="3" placeholder="Enter product detailed features..." required style="resize: vertical; min-height: 80px;"></textarea>
+        </div>
+
+        <div class="checkout-grid-2">
+          <div class="form-group">
+            <label for="product-category">Category</label>
+            <select id="product-category" class="form-control" required style="cursor: pointer;">
+              <option value="Electronics">Electronics</option>
+              <option value="Clothing">Clothing</option>
+              <option value="Shoes">Shoes</option>
+              <option value="Accessories">Accessories</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="product-price">Price ($)</label>
+            <input type="number" id="product-price" class="form-control" placeholder="99.99" step="0.01" min="0" required>
+          </div>
+        </div>
+
+        <div class="checkout-grid-2">
+          <div class="form-group">
+            <label for="product-image">Image URL</label>
+            <input type="url" id="product-image" class="form-control" placeholder="https://images.unsplash.com/..." required>
+          </div>
+          <div class="form-group">
+            <label for="product-stock">Stock Quantity</label>
+            <input type="number" id="product-stock" class="form-control" placeholder="10" min="0" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full-width btn-lg mt-4">
+          Save Product
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-bottom" style="border-top: none; padding-top: 0;">
+      <p>&copy; 2026 ShopNest E-Commerce. All rights reserved.</p>
+      <p>CodeAlpha Admin Dashboard</p>
+    </div>
+  </footer>
+
+  <!-- DEPENDENCIES & APPLICATION LOGIC SCRIPTS -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/admin.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Boot admin controls
+      Admin.init();
+    });
+  </script>
+</body>
+</html>
